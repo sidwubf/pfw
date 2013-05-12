@@ -1,8 +1,29 @@
 <?php
-$start = microtime(true);
+
 error_reporting(E_ALL);
 
 defined('PFW_ROOT_PATH') || define('PFW_ROOT_PATH', dirname(__FILE__) . '/');
+defined('PFW_CORE_PATH') || define('PFW_CORE_PATH', PFW_ROOT_PATH . 'core/');
+defined('PFW_CONTROLLER_PATH') || define('PFW_CONTROLLER_PATH', PFW_ROOT_PATH . 'controller/');
+defined('PFW_VIEW_PATH') || define('PFW_VIEW_PATH', PFW_ROOT_PATH . 'view/');
+
+include(PFW_CORE_PATH . "loader.php");
+
+try {
+    Loader::core('Marker');
+    Loader::core('PFW');
+
+    Marker::mark('whole');
+    PFW::run();
+    Marker::mark('whole');
+    echo "<pre>";print_r(Marker::get('whole'));
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+
+
+/*
+echo PFW_ROOT_PATH;exit;
 
 defined('PFW_CORE_PATH')       || define('PFW_CORE_PATH',       PFW_ROOT_PATH . 'core/');
 defined('PFW_CONFIG_PATH')     || define('PFW_CONFIG_PATH',     PFW_ROOT_PATH . 'config/');
@@ -44,3 +65,4 @@ $controller->$function();
 $marker->mark('end');
 
 echo microtime(true) - $start;
+*/

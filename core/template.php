@@ -1,6 +1,6 @@
 <?php
 
-class PFWTemplate {
+class Template {
     //配置变量
     private $base_path = '';
     private $reset_vars = TRUE;
