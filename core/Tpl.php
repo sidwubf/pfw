@@ -184,7 +184,7 @@ class Tpl {
 
             // save the output in the cache
             if( $this->cache )
-                file_put_contents( $this->tpl['cache_filename'], "<?php if(!class_exists('raintpl')){exit;}?>" . $raintpl_contents );
+                file_put_contents( $this->tpl['cache_filename'], $raintpl_contents );
 
             // free memory
             unset( $this->tpl );
@@ -257,11 +257,12 @@ class Tpl {
             $this->tpl['checked']               = true;
 
             // if the template doesn't exist and is not an external source throw an error
-            if( self::$check_template_update && !file_exists( $this->tpl['tpl_filename'] ) && !preg_match('/http/', $tpl_name) ){
+            if( self::$check_template_update && !file_exists( $this->tpl['tpl_filename'] )){
                 $e = new RainTpl_NotFoundException( 'Template '. $tpl_basename .' not found!' );
                 throw $e->setTemplateFile($this->tpl['tpl_filename']);
             }
-
+            $this->compileFile( $tpl_basename, $tpl_basedir, $this->tpl['tpl_filename'], self::$cache_dir, $this->tpl['compiled_filename'] );
+            return true;
             // We check if the template is not an external source
             if(preg_match('/http/', $tpl_name)){
                 $this->compileFile('', '', $tpl_name, self::$cache_dir, $this->tpl['compiled_filename'] );

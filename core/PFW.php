@@ -7,8 +7,8 @@ class PFW {
     }
 
     public static function run() {
-        $_view_path = self::_run_controller();
-        self::_run_view($_view_path);
+        Loader::core('PfwController');
+        self::_run_controller();
     }
 
     private static function _run_controller() {
@@ -17,17 +17,10 @@ class PFW {
         $_function = self::_get_function();
         if (method_exists($_class, $_function)) {
             $_obj = new $_class();
-            $_view = $_obj->$_function();
-            return $_view;
+            $_obj->$_function();
         } else {
             throw new Exception("no such function {$_function} of class {$_class}");
         }
-    }
-
-    private static function _run_view($view_path) {
-        Loader::core('template');
-        $_template = new Template($view_path);
-
     }
 
     private static function _get_controller() {

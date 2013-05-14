@@ -6,17 +6,18 @@ defined('PFW_ROOT_PATH') || define('PFW_ROOT_PATH', dirname(__FILE__) . '/');
 defined('PFW_CORE_PATH') || define('PFW_CORE_PATH', PFW_ROOT_PATH . 'core/');
 defined('PFW_CONTROLLER_PATH') || define('PFW_CONTROLLER_PATH', PFW_ROOT_PATH . 'controller/');
 defined('PFW_VIEW_PATH') || define('PFW_VIEW_PATH', PFW_ROOT_PATH . 'view/');
+defined('PFW_TMP_PATH') || define('PFW_TMP_PATH', PFW_ROOT_PATH . 'tmp/');
 
-include(PFW_CORE_PATH . "loader.php");
+include(PFW_CORE_PATH . "Loader.php");
 
 try {
     Loader::core('Marker');
     Loader::core('PFW');
+    Loader::core('Shower');
 
     Marker::mark('whole');
     PFW::run();
     Marker::mark('whole');
-    echo "<pre>";print_r(Marker::get('whole'));
 } catch (Exception $e) {
     echo $e->getMessage();
 }
